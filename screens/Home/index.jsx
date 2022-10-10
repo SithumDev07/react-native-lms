@@ -1,27 +1,70 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-const Home = () => (
-  <View style={styles.container}>
-    <TouchableOpacity style={styles.button}>
-      <Text style={styles.buttonText}>Register</Text>
-    </TouchableOpacity>
-  </View>
-);
+import { useFonts } from 'expo-font';
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList } from 'react-native-gesture-handler';
+import { IconButton } from '../../components';
+import { COLORS, dummyData, icons, SIZES } from "../../constants";
+
+
+const PADDING = 10
+
+const Home = () => {
+  const [loaded] = useFonts({
+    Manrope: require('../../assets/fonts/Manrope-Regular.ttf')
+  })
+
+  if (!loaded) {
+    return null;
+  }
+
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        {/* Greetings */}
+        <View style={styles.greeting}>
+          <Text style={{
+            color: COLORS.gray50,
+            fontFamily: 'Manrope',
+            fontSize: SIZES.h3,
+            lineHeight: 22
+          }}>Hello</Text>
+          <Text>Thursday, 9th September, 2022</Text>
+        </View>
+
+        {/* Notifications */}
+        <IconButton icon={icons.notification} iconStyle={{
+          tintColor: COLORS.black
+        }} />
+      </View>
+
+      {/* Content */}
+      <ScrollView contentContainerStyle={{
+        paddingBottom: 150,
+      }} showsVerticalScrollIndicator={false}>
+        <FlatList horizontal data={dummyData.courses_list_1} listKey="Courses" keyExtractor={item => `Courses-${item.id}`} showsHorizontalScrollIndicator={false} contentContainerStyle={{
+          marginTop: SIZES.padding
+        }} renderItem={({ item, index }) => (
+          <View />
+        )} />
+      </ScrollView>
+    </View>
+  )
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-end",
     paddingHorizontal: 10,
-    paddingVertical: 10
   },
-  button: {
-    paddingVertical: 16,
-    paddingHorizontal: 8,
-    backgroundColor: '#191919',
+  header: {
+    flexDirection: "row",
+    marginTop: 40,
+    marginBottom: 10,
+    paddingHorizontal: PADDING,
     alignItems: 'center'
   },
-  buttonText: {
-    color: '#FFFFFF'
+  greeting: {
+    flex: 1
   }
 });
 
