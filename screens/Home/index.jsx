@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { FlatList } from 'react-native-gesture-handler';
-import { IconButton, CourseCard } from '../../components';
+import { IconButton, CourseCard, LineDivider } from '../../components';
 import { COLORS, dummyData, icons, SIZES } from "../../constants";
 
 
@@ -49,6 +49,10 @@ const Home = () => {
             marginRight: index === dummyData.courses_list_1.length - 1 ? SIZES.padding : 0
           }} course={item} />
         )} />
+
+        <LineDivider lineStyle={{
+          marginVertical: SIZES.padding
+        }} />
       </ScrollView>
     </View>
   )
