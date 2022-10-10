@@ -1,17 +1,28 @@
-import { StyleSheet, Text, View } from "react-native";
-
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const Home = () => (
   <View style={styles.container}>
-    <Text>Home</Text>
+    <TouchableOpacity style={styles.button}>
+      <Text style={styles.buttonText}>Register</Text>
+    </TouchableOpacity>
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingHorizontal: 10,
+    paddingVertical: 10
   },
+  button: {
+    paddingVertical: 16,
+    paddingHorizontal: 8,
+    backgroundColor: '#191919',
+    alignItems: 'center'
+  },
+  buttonText: {
+    color: '#FFFFFF'
+  }
 });
 
 export default Home;
