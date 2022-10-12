@@ -1,8 +1,11 @@
+import { useNavigation } from "@react-navigation/native";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS, FONTS, SIZES } from "../../constants";
 import CategoryLabel from "../CategoryLabel";
 
 function CourseCard({ containerStyle, course }) {
+
+    const navigation = useNavigation()
 
     const styles = StyleSheet.create({
         container: {
@@ -29,7 +32,7 @@ function CourseCard({ containerStyle, course }) {
     })
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("Course")}>
             <View style={styles.flexContainer}>
                 {/* Content */}
                 <View style={{

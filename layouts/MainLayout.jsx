@@ -11,14 +11,6 @@ const BOTTOM_TABS = constants.bottom_tabs.map((bottom_tab) => ({
 
 const MainLayout = () => {
 
-  // const [loaded] = useFonts({
-  //   Manrope: require('../assets/fonts/Manrope-Regular.ttf')
-  // })
-
-  // if (!loaded) {
-  //   return null;
-  // }
-
   const flatListRef = useRef()
   const scrollX = useRef(new Animated.Value(0)).current
 

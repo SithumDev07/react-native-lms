@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import Course from './screens/Course'
 import MainLayout from "./layouts/MainLayout";
 
 const Stack = createNativeStackNavigator();
@@ -18,6 +18,10 @@ const App = () => {
         <Stack.Screen
           name="Dashboard"
           component={MainLayout}
+        />
+        <Stack.Screen
+          name="Course"
+          component={Course}
         />
       </Stack.Navigator>
     </NavigationContainer>
