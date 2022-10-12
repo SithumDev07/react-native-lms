@@ -1,9 +1,20 @@
+import { useFonts } from 'expo-font'
 import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native'
-import { COLORS, icons, SIZES } from '../../constants'
+import { COLORS, FONTS, icons, SIZES } from '../../constants'
 import { stringAvatar } from '../../utils/usableFunctions'
 import IconButton from '../IconButton'
 
 function Greeting({ name }) {
+
+    const [loaded] = useFonts({
+        Manrope: require('../../assets/fonts/Manrope-Regular.ttf'),
+        'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
+        'Poppins-SemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf')
+    })
+
+    if (!loaded) {
+        return null;
+    }
 
     const styles = StyleSheet.create({
         flexContainer: {
@@ -13,7 +24,7 @@ function Greeting({ name }) {
         },
         textBg: {
             color: COLORS.additionalColor11,
-            fontSize: SIZES.h2
+            ...FONTS.h2
         },
         touchOpacity: {
             padding: SIZES.padding * 0.5,
@@ -33,12 +44,12 @@ function Greeting({ name }) {
         },
         name: {
             marginTop: SIZES.padding * .275,
-            fontSize: SIZES.h2,
-            fontWeight: 'bold',
-            color: COLORS.gray70
+            color: COLORS.gray70,
+            ...FONTS.title
         },
         greet: {
-            color: COLORS.gray80
+            color: COLORS.gray80,
+            ...FONTS.body3
         }
     })
 
@@ -53,7 +64,7 @@ function Greeting({ name }) {
                 }} />
             </View>
             <Text style={styles.greet}>Good Morning,</Text>
-            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">{name}</Text>
         </View>
     )
 }

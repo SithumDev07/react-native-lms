@@ -2,12 +2,15 @@ import { useFonts } from 'expo-font';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from 'react-native-gesture-handler';
 import { IconButton, CourseCard, LineDivider, Greeting } from '../../components';
-import { COLORS, dummyData, icons, SIZES } from "../../constants";
+import { COLORS, dummyData, FONTS, icons, SIZES } from "../../constants";
 
 
 const Home = () => {
   const [loaded] = useFonts({
-    Manrope: require('../../assets/fonts/Manrope-Regular.ttf')
+    Manrope: require('../../assets/fonts/Manrope-Regular.ttf'),
+    'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-SemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
+    'Poppins-Italic': require('../../assets/fonts/Poppins-Italic.ttf')
   })
 
   if (!loaded) {
@@ -16,43 +19,21 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Greeting name={"Sithum Basnayaka"} />
       {/* Header */}
-      <View style={styles.header}>
-        {/* Greetings */}
-        <View style={styles.greeting}>
-          <Text style={{
-            color: COLORS.gray50,
-            fontFamily: 'Manrope',
-            fontSize: SIZES.h3,
-            lineHeight: 22
-          }}>Hello</Text>
-          <Text>Thursday, 9th September, 2022</Text>
-        </View>
+      {/* Greeting */}
+      <Greeting name={"Sithum Basnayaka"} />
 
-        {/* Notifications */}
-        <IconButton icon={icons.notification} iconStyle={{
+      <View style={[styles.flexContainer, styles.commonSpacing]}>
+        <Text style={styles.linkTitle}>Continue to Learn</Text>
+        <IconButton icon={icons.all} iconStyle={{
           tintColor: COLORS.black
         }} />
       </View>
 
       {/* Content */}
-      <View style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: SIZES.padding
-      }}>
-        <Text style={{
-          fontSize: SIZES.h2,
-          color: COLORS.gray80
-        }}>Courses</Text>
-        <TouchableOpacity>
-          <Text>View All</Text>
-        </TouchableOpacity>
-      </View>
       <ScrollView contentContainerStyle={{
         paddingBottom: 150,
+        paddingHorizontal: SIZES.padding
       }} showsVerticalScrollIndicator={false}>
         <FlatList
           data={dummyData.courses_list_1}
@@ -64,8 +45,7 @@ const Home = () => {
           }}
           renderItem={({ item, index }) => (
             <CourseCard containerStyle={{
-              // marginLeft: index === 0 ? SIZES.padding : SIZES.radius,
-              // marginRight: index === dummyData.courses_list_1.length - 1 ? SIZES.padding : 0
+              marginBottom: SIZES.padding
             }} course={item} />
           )} />
 
@@ -81,15 +61,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: "row",
-    marginTop: 40,
-    marginBottom: 10,
-    paddingHorizontal: SIZES.padding,
-    alignItems: 'center'
-  },
   greeting: {
     flex: 1
+  },
+  flexContainer: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  },
+  commonSpacing: {
+    marginBottom: SIZES.padding * 0.5,
+    marginTop: SIZES.padding * 0.5,
+    paddingHorizontal: SIZES.padding
+  },
+  linkTitle: {
+    color: COLORS.gray70,
+    ...FONTS.body2
   }
 });
 

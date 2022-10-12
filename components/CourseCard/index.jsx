@@ -1,51 +1,53 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { COLORS, SIZES } from "../../constants";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { COLORS, FONTS, SIZES } from "../../constants";
 import CategoryLabel from "../CategoryLabel";
 
 function CourseCard({ containerStyle, course }) {
-    return (
-        <TouchableOpacity style={{
-            width: '100%',
-            overflow: 'hidden',
-            borderRadius: SIZES.radius,
-            marginBottom: SIZES.radius,
-            ...containerStyle
-        }}>
-            <Image
-                source={course.thumbnail}
-                resizeMode="cover"
-                style={{
-                    width: '100%',
-                    height: 150,
 
-                    opacity: 0.8,
-                }} />
-            <View style={{
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
-                backgroundColor: COLORS.black,
-                opacity: .6
-            }} />
-            <View style={{
-                position: 'absolute',
-                padding: SIZES.padding * 0.7
-            }}>
-                <Text style={{
-                    fontSize: SIZES.h2,
-                    fontWeight: '500',
-                    color: COLORS.gray10,
+    const styles = StyleSheet.create({
+        container: {
+            borderWidth: .75,
+            borderColor: COLORS.gray30,
+            padding: SIZES.padding * .4,
+            borderRadius: SIZES.radius,
+            ...containerStyle
+        },
+        flexContainer: {
+            flexDirection: 'row',
+            justifyContent: 'space-between'
+        },
+        category: {
+            color: COLORS.gray70,
+            ...FONTS.category
+        },
+        title: {
+            fontWeight: '600',
+            color: COLORS.primDark,
+            marginTop: 10,
+            ...FONTS.body3
+        }
+    })
+
+    return (
+        <TouchableOpacity style={styles.container}>
+            <View style={styles.flexContainer}>
+                {/* Content */}
+                <View style={{
                     flex: 1
-                }}>{course.title}</Text>
+                }}>
+                    <Text style={styles.category} numberOfLines={1} ellipsizeMode="tail">{course.category}</Text>
+                    <Text style={styles.title}>{course.title}</Text>
+                </View>
+                {/* Image */}
+                <Image
+                    source={course.thumbnail}
+                    resizeMode="cover"
+                    style={{
+                        width: SIZES.width * .3,
+                        height: 100,
+                        borderRadius: SIZES.radius * 1.5
+                    }} />
             </View>
-            <CategoryLabel label={course.category} contentContainerStyle={{
-                position: 'absolute',
-                right: 10,
-                bottom: 10,
-            }} labelStyle={{
-                color: COLORS.gray10,
-                fontSize: SIZES.font
-            }} />
         </TouchableOpacity>
     )
 }
