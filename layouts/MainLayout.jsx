@@ -1,7 +1,6 @@
 
 import React, { useRef } from "react";
 import { Animated, Image, Text, TouchableOpacity, View } from "react-native";
-import { Shadow } from 'react-native-shadow-2';
 import { COLORS, constants, SIZES } from "../constants";
 import { Home, Profile, Search } from '../screens';
 
@@ -23,7 +22,7 @@ const MainLayout = () => {
   const flatListRef = useRef()
   const scrollX = useRef(new Animated.Value(0)).current
 
-  function RenderContent() {
+  function renderContent() {
 
     return (
       <View style={{
@@ -65,7 +64,7 @@ const MainLayout = () => {
     )
   }
 
-  const Tabs = ({ scrollX }) => {
+  const Tabs = () => {
     return (
       <View style={{
         flex: 1,
@@ -99,23 +98,27 @@ const MainLayout = () => {
     )
   }
 
-  function RenderBottomTab() {
+  function renderBottomTabs() {
 
     return (
       <View style={{
-        marginBottom: 20,
         paddingHorizontal: SIZES.padding,
-        paddingVertical: SIZES.radius
+        paddingVertical: SIZES.radius,
+        position: 'absolute',
+        bottom: 0,
+        width: SIZES.width
       }}>
-        <Shadow size={[SIZES.width - (SIZES.padding), 85]}>
-          <View style={{
-            flex: 1,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.primary3
-          }}>
-            <Tabs scrollX={scrollX} />
-          </View>
-        </Shadow>
+
+        <View style={{
+          // flex: 1,
+          borderRadius: SIZES.radius,
+          backgroundColor: COLORS.primary,
+          // backgroundColor: 'black',
+          width: '100%',
+          height: SIZES.height * 0.125
+        }}>
+          <Tabs />
+        </View>
       </View>
     )
   }
@@ -123,14 +126,15 @@ const MainLayout = () => {
   return (
     <View style={{
       flex: 1,
-      backgroundColor: COLORS.white
+      backgroundColor: COLORS.gray10
     }}>
 
       {/* Content */}
-      <RenderContent />
+      {/* <RenderContent /> */}
+      {renderContent()}
 
       {/* Bottom Tabs */}
-      <RenderBottomTab />
+      {renderBottomTabs()}
     </View>
   )
 }

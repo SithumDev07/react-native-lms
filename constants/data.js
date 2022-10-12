@@ -34,15 +34,31 @@ const categories = [
 const courses_list_1 = [
   {
     id: 0,
-    title: "Canava Graphic Design Course - Beginner",
+    title: "Project Management - Complete Guide 2021/2022",
     duration: "2h 30m",
+    category: "Information Technology",
     thumbnail: require("../assets/images/thumbnail_1.png"),
   },
   {
     id: 1,
     title: "The Complete Presentation and speech",
     duration: "1h 30m",
+    category: "Management",
     thumbnail: require("../assets/images/thumbnail_2.png"),
+  },
+  {
+    id: 2,
+    title: "Web Application Development",
+    duration: "1h 30m",
+    category: "Information Technology",
+    thumbnail: require("../assets/images/thumbnail_3.png"),
+  },
+  {
+    id: 3,
+    title: "Programming Concepts",
+    duration: "1h 30m",
+    category: "Information Technology",
+    thumbnail: require("../assets/images/thumbnail_4.png"),
   },
 ];
 

@@ -1,5 +1,5 @@
 import { useFonts } from 'expo-font';
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from 'react-native-gesture-handler';
 import { IconButton, CourseCard, LineDivider } from '../../components';
 import { COLORS, dummyData, icons, SIZES } from "../../constants";
@@ -38,17 +38,37 @@ const Home = () => {
       </View>
 
       {/* Content */}
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: SIZES.padding
+      }}>
+        <Text style={{
+          fontSize: SIZES.h2,
+          color: COLORS.gray80
+        }}>Courses</Text>
+        <TouchableOpacity>
+          <Text>View All</Text>
+        </TouchableOpacity>
+      </View>
       <ScrollView contentContainerStyle={{
         paddingBottom: 150,
       }} showsVerticalScrollIndicator={false}>
-        <FlatList horizontal data={dummyData.courses_list_1} listKey="Courses" keyExtractor={item => `Courses-${item.id}`} showsHorizontalScrollIndicator={false} contentContainerStyle={{
-          marginTop: SIZES.padding
-        }} renderItem={({ item, index }) => (
-          <CourseCard containerStyle={{
-            marginLeft: index === 0 ? SIZES.padding : SIZES.radius,
-            marginRight: index === dummyData.courses_list_1.length - 1 ? SIZES.padding : 0
-          }} course={item} />
-        )} />
+        <FlatList
+          data={dummyData.courses_list_1}
+          listKey="Courses"
+          keyExtractor={item => `Courses-${item.id}`}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            marginTop: SIZES.padding * .7
+          }}
+          renderItem={({ item, index }) => (
+            <CourseCard containerStyle={{
+              // marginLeft: index === 0 ? SIZES.padding : SIZES.radius,
+              // marginRight: index === dummyData.courses_list_1.length - 1 ? SIZES.padding : 0
+            }} course={item} />
+          )} />
 
         <LineDivider lineStyle={{
           marginVertical: SIZES.padding
