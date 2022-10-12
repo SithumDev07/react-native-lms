@@ -1,11 +1,9 @@
 import { useFonts } from 'expo-font';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from 'react-native-gesture-handler';
-import { IconButton, CourseCard, LineDivider } from '../../components';
+import { IconButton, CourseCard, LineDivider, Greeting } from '../../components';
 import { COLORS, dummyData, icons, SIZES } from "../../constants";
 
-
-const PADDING = 10
 
 const Home = () => {
   const [loaded] = useFonts({
@@ -18,6 +16,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
+      <Greeting name={"Sithum Basnayaka"} />
       {/* Header */}
       <View style={styles.header}>
         {/* Greetings */}
@@ -81,13 +80,12 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
   },
   header: {
     flexDirection: "row",
     marginTop: 40,
     marginBottom: 10,
-    paddingHorizontal: PADDING,
+    paddingHorizontal: SIZES.padding,
     alignItems: 'center'
   },
   greeting: {

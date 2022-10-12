@@ -2,7 +2,7 @@
 import React, { useRef } from "react";
 import { Animated, Image, Text, TouchableOpacity, View } from "react-native";
 import { COLORS, constants, SIZES } from "../constants";
-import { Home, Profile, Search } from '../screens';
+import { Announcements, Home, Profile, Search } from '../screens';
 
 const BOTTOM_TABS = constants.bottom_tabs.map((bottom_tab) => ({
   ...bottom_tab,
@@ -26,7 +26,7 @@ const MainLayout = () => {
 
     return (
       <View style={{
-        flex: 1
+        flex: 1,
       }}>
 
         <Animated.FlatList
@@ -50,9 +50,11 @@ const MainLayout = () => {
             return (
               <View style={{
                 height: SIZES.height,
-                width: SIZES.width
+                width: SIZES.width,
               }}>
+                {/* Change Here */}
                 {item.label === constants.screens.home && <Home />}
+                {/* {item.label === constants.screens.home && <Announcements />} */}
                 {item.label === constants.screens.search && <Search />}
                 {item.label === constants.screens.profile && <Profile />}
               </View>
@@ -87,11 +89,6 @@ const MainLayout = () => {
                 width: 25,
                 height: 25
               }} />
-            <Text style={{
-              marginTop: 3,
-              color: COLORS.white,
-              // fontFamily: 'Manrope'
-            }}>{item.label}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -110,12 +107,10 @@ const MainLayout = () => {
       }}>
 
         <View style={{
-          // flex: 1,
-          borderRadius: SIZES.radius,
-          backgroundColor: COLORS.primary,
-          // backgroundColor: 'black',
+          borderRadius: SIZES.width / 2,
+          backgroundColor: COLORS.primDark,
           width: '100%',
-          height: SIZES.height * 0.125
+          height: SIZES.height * 0.0875
         }}>
           <Tabs />
         </View>
@@ -130,7 +125,6 @@ const MainLayout = () => {
     }}>
 
       {/* Content */}
-      {/* <RenderContent /> */}
       {renderContent()}
 
       {/* Bottom Tabs */}
