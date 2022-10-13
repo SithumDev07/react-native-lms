@@ -1,4 +1,5 @@
 
+import { useFonts } from "expo-font";
 import React, { useCallback, useRef } from "react";
 import { Animated, Image, TouchableOpacity, View } from "react-native";
 import { COLORS, constants, SIZES } from "../constants";

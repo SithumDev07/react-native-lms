@@ -1,21 +1,21 @@
-import { useFonts } from 'expo-font';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { FlatList } from 'react-native-gesture-handler';
-import { IconButton, CourseCard, LineDivider, Greeting, TextButton } from '../../components';
+import { CourseCard, Greeting, IconButton, LineDivider, TextButton } from '../../components';
 import { COLORS, dummyData, FONTS, icons, SIZES } from "../../constants";
 
 
 const Home = () => {
-  const [loaded] = useFonts({
-    Manrope: require('../../assets/fonts/Manrope-Regular.ttf'),
-    'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
-    'Poppins-SemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
-    'Poppins-Italic': require('../../assets/fonts/Poppins-Italic.ttf')
-  })
 
-  if (!loaded) {
-    return null;
-  }
+  // const [loaded] = useFonts({
+  //   Manrope: require('../../assets/fonts/Manrope-Regular.ttf'),
+  //   'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
+  //   // 'Poppins-SemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
+  //   'Poppins-Italic': require('../../assets/fonts/Poppins-Italic.ttf')
+  // })
+
+  // if (!loaded) {
+  //   return null;
+  // }
 
   return (
     <View style={styles.container}>

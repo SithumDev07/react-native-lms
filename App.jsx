@@ -4,10 +4,23 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Course from './screens/Course'
 import StartCourse from "./screens/StartCourse";
 import MainLayout from "./layouts/MainLayout";
+import { useFonts } from "expo-font";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+
+  const [loaded] = useFonts({
+    Manrope: require('./assets/fonts/Manrope-Regular.ttf'),
+    'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-SemiBold': require('./assets/fonts/Poppins-SemiBold.ttf'),
+    'Poppins-Italic': require('./assets/fonts/Poppins-Italic.ttf')
+  })
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator
