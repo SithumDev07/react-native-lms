@@ -1,8 +1,8 @@
 
 import React, { useRef } from "react";
-import { Animated, Image, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Image, TouchableOpacity, View } from "react-native";
 import { COLORS, constants, SIZES } from "../constants";
-import { Announcements, Home, Profile, Search } from '../screens';
+import { Home, Profile, Search } from '../screens';
 
 const BOTTOM_TABS = constants.bottom_tabs.map((bottom_tab) => ({
   ...bottom_tab,
@@ -113,7 +113,7 @@ const MainLayout = () => {
   return (
     <View style={{
       flex: 1,
-      backgroundColor: COLORS.gray10
+      backgroundColor: COLORS.white
     }}>
 
       {/* Content */}

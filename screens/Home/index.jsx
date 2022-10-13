@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from 'react-native-gesture-handler';
-import { IconButton, CourseCard, LineDivider, Greeting } from '../../components';
+import { IconButton, CourseCard, LineDivider, Greeting, TextButton } from '../../components';
 import { COLORS, dummyData, FONTS, icons, SIZES } from "../../constants";
 
 
@@ -27,7 +27,7 @@ const Home = () => {
 
       {/* Content */}
       <ScrollView contentContainerStyle={{
-        paddingBottom: 150,
+        paddingBottom: SIZES.padding * 4,
         paddingHorizontal: SIZES.padding
       }} showsVerticalScrollIndicator={false}>
         {/* New & Recommended */}
@@ -51,6 +51,8 @@ const Home = () => {
             }} course={item} />
           )} />
 
+        <TextButton title={"View All"} />
+
         <LineDivider lineStyle={{
           marginVertical: SIZES.padding * .4
         }} />
@@ -62,6 +64,23 @@ const Home = () => {
             tintColor: COLORS.black
           }} />
         </View>
+
+        <FlatList
+          data={dummyData.courses_list_1}
+          listKey="Courses"
+          keyExtractor={item => `Courses-${item.id}`}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            marginTop: SIZES.padding * .7
+          }}
+          renderItem={({ item, index }) => (
+            <CourseCard containerStyle={{
+              marginBottom: SIZES.padding
+            }} course={item} isEnrolled />
+          )} />
+
+        <TextButton title={"View All"} />
+
       </ScrollView>
     </View>
   )

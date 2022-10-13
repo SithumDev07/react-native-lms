@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { COLORS, FONTS, SIZES } from '../../constants'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const FeaturedButton = ({ title, callBackHandler }) => {
 
@@ -9,7 +10,7 @@ const FeaturedButton = ({ title, callBackHandler }) => {
             paddingHorizontal: SIZES.padding,
             paddingVertical: SIZES.radius,
             position: 'absolute',
-            bottom: SIZES.padding * .1,
+            bottom: 0,
         },
         title: {
             color: COLORS.gray10,
@@ -22,6 +23,15 @@ const FeaturedButton = ({ title, callBackHandler }) => {
             alignItems: 'center',
             justifyContent: 'center',
             width: SIZES.width * 0.875,
+        },
+        background: {
+            width: SIZES.width,
+            position: 'absolute',
+            zIndex: -1,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: '140%',
         }
     })
 
@@ -30,6 +40,13 @@ const FeaturedButton = ({ title, callBackHandler }) => {
             <TouchableOpacity style={styles.touchableOpacity} onPress={callBackHandler}>
                 <Text style={styles.title}>{title}</Text>
             </TouchableOpacity>
+            <LinearGradient
+                // Background Linear Gradient
+                // colors={['transparent', COLORS.primary]}
+                colors={['transparent', COLORS.gray10]}
+                locations={[0.1, 0.5]}
+                style={styles.background}
+            />
         </View>
     )
 }
