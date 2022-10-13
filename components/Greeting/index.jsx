@@ -1,10 +1,12 @@
 import { useFonts } from 'expo-font'
-import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native'
+import { useEffect } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import Animated from 'react-native-reanimated'
 import { COLORS, FONTS, icons, SIZES } from '../../constants'
 import { stringAvatar } from '../../utils/usableFunctions'
 import IconButton from '../IconButton'
 
-function Greeting({ name }) {
+function Greeting({ name, animationStyle = {}, textStyle, textStylesGreeting, commonSpacingStyle }) {
 
     const [loaded] = useFonts({
         Manrope: require('../../assets/fonts/Manrope-Regular.ttf'),
@@ -35,8 +37,7 @@ function Greeting({ name }) {
         },
         outContainer: {
             paddingHorizontal: SIZES.padding,
-            paddingVertical: SIZES.padding * 1.2,
-            paddingTop: SIZES.padding * 3,
+            // paddingTop: SIZES.padding * 3,
             backgroundColor: COLORS.greeting
         },
         commonSpacing: {
@@ -54,18 +55,18 @@ function Greeting({ name }) {
     })
 
     return (
-        <View style={styles.outContainer}>
-            <View style={[styles.flexContainer, styles.commonSpacing]}>
+        <Animated.View style={[styles.outContainer, animationStyle]}>
+            <Animated.View style={[styles.flexContainer, styles.commonSpacing, commonSpacingStyle]}>
                 <TouchableOpacity style={styles.touchOpacity}>
                     <Text style={styles.textBg}>{stringAvatar(name).children}</Text>
                 </TouchableOpacity>
                 <IconButton icon={icons.google} iconStyle={{
                     tintColor: COLORS.black
                 }} />
-            </View>
-            <Text style={styles.greet}>Good Morning,</Text>
-            <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">{name}</Text>
-        </View>
+            </Animated.View>
+            <Animated.Text style={[styles.greet, textStylesGreeting]}>Good Morning,</Animated.Text>
+            <Animated.Text style={[styles.name, textStyle]} numberOfLines={1} ellipsizeMode="tail">{name}</Animated.Text>
+        </Animated.View>
     )
 }
 
