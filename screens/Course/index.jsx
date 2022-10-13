@@ -30,6 +30,19 @@ const Course = () => {
             marginTop: SIZES.padding,
             ...FONTS.h2
         },
+        categoryContainer: {
+            paddingHorizontal: SIZES.padding,
+            marginTop: SIZES.padding * .3,
+            alignItems: 'flex-start'
+        },
+        category: {
+            ...FONTS.body3,
+            borderWidth: 0.5,
+            borderColor: COLORS.primDark,
+            borderRadius: SIZES.radius,
+            paddingHorizontal: SIZES.padding * .5,
+            paddingVertical: SIZES.padding * .1
+        },
         commonTitle: {
             paddingHorizontal: SIZES.padding,
             color: COLORS.gray70,
@@ -63,6 +76,9 @@ const Course = () => {
                     paddingBottom: 150,
                 }}>
                     <Text style={styles.title}>Programming Concepts</Text>
+                    <View style={styles.categoryContainer}>
+                        <Text style={styles.category}>Information Technology</Text>
+                    </View>
                     <Text style={styles.commonTitle}>About this course</Text>
                     <Text style={styles.paragraph}>
                         In this beginners guide to coding, you will learn the basics used in computer programming languages. As a beginner, you will start learning the fundamentals of coding that you mind find in a “Programming 101” course. We will use some core Java concepts as a starting point that are applicable to most other programming languages.

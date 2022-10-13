@@ -23,18 +23,20 @@ const Home = () => {
       {/* Greeting */}
       <Greeting name={"Sithum Basnayaka"} />
 
-      <View style={[styles.flexContainer, styles.commonSpacing]}>
-        <Text style={styles.linkTitle}>Continue to Learn</Text>
-        <IconButton icon={icons.all} iconStyle={{
-          tintColor: COLORS.black
-        }} />
-      </View>
+
 
       {/* Content */}
       <ScrollView contentContainerStyle={{
         paddingBottom: 150,
         paddingHorizontal: SIZES.padding
       }} showsVerticalScrollIndicator={false}>
+        {/* New & Recommended */}
+        <View style={[styles.flexContainer, styles.commonSpacing]}>
+          <Text style={styles.linkTitle}>New & Recommended</Text>
+          <IconButton icon={icons.all} iconStyle={{
+            tintColor: COLORS.black
+          }} />
+        </View>
         <FlatList
           data={dummyData.courses_list_1}
           listKey="Courses"
@@ -50,8 +52,16 @@ const Home = () => {
           )} />
 
         <LineDivider lineStyle={{
-          marginVertical: SIZES.padding
+          marginVertical: SIZES.padding * .4
         }} />
+
+        {/* Enrolled Courses */}
+        <View style={[styles.flexContainer, styles.commonSpacing]}>
+          <Text style={styles.linkTitle}>Enrolled Courses</Text>
+          <IconButton icon={icons.all} iconStyle={{
+            tintColor: COLORS.black
+          }} />
+        </View>
       </ScrollView>
     </View>
   )
@@ -72,7 +82,6 @@ const styles = StyleSheet.create({
   commonSpacing: {
     marginBottom: SIZES.padding * 0.5,
     marginTop: SIZES.padding * 0.5,
-    paddingHorizontal: SIZES.padding
   },
   linkTitle: {
     color: COLORS.gray70,
