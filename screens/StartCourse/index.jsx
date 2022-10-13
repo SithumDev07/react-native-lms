@@ -1,16 +1,18 @@
 import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useFonts } from 'expo-font'
 import { useNavigation } from '@react-navigation/native'
 import { COLORS, FONTS, SIZES } from '../../constants'
-import { CourseHeader, FeaturedButton } from '../../components'
+import { CourseHeader, FeaturedButton, WeekCard } from '../../components'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
+import { stringAvatar } from '../../utils/usableFunctions'
 
 const StartCourse = () => {
 
     const navigation = useNavigation()
     const flatListRef = useRef()
     const [activeTab, setActiveTab] = useState(0)
+    const scrollX = useRef(new Animated.Value(0)).current
 
     const TABS = [
         {
@@ -41,7 +43,6 @@ const StartCourse = () => {
         },
         title: {
             paddingHorizontal: SIZES.padding,
-            marginTop: SIZES.padding,
             ...FONTS.h2
         },
         categoryContainer: {
@@ -76,6 +77,112 @@ const StartCourse = () => {
         },
     })
 
+    function renderScrollViewContent() {
+        switch (activeTab) {
+            case 0:
+                return (
+                    <>
+                        <View style={{
+                            paddingHorizontal: SIZES.padding,
+                            marginTop: SIZES.padding
+                        }}>
+                            <WeekCard week={"01"} lesson={"Fundamental Techniques of Writing a Better Code"} description={"If you, just as many developers, have the book called Clean Code, by Robert Cecil Martin (Uncle Bob) in your desk, you know the meaning of clean code is very wide and specialists have their own definitions and even disagree about them. Grady Booch, Software Engineering chief-scientist at Software da IBM Research, for example, is cited by the author because he considers that: “Clean code is simple and direct. Clean code reads like well-written prose. Clean code never obscures the designer's intent but rather is full of crisp abstractions and straightforward lines of control. However, Michael Feathers, author of Working Effectively with Legacy Code, highlights the word care in a clean codes definition."} isAssignmentDue />
+                        </View>
+                    </>
+                )
+            case 1:
+                return (
+                    <>
+                        <Text style={styles.title}>Programming Concepts</Text>
+                        <View style={styles.categoryContainer}>
+                            <Text style={styles.category}>Information Technology</Text>
+                        </View>
+                        <Text style={styles.commonTitle}>About this course</Text>
+                        <Text style={styles.paragraph}>
+                            In this beginners guide to coding, you will learn the basics used in computer programming languages. As a beginner, you will start learning the fundamentals of coding that you mind find in a “Programming 101” course. We will use some core Java concepts as a starting point that are applicable to most other programming languages.
+                        </Text>
+                        <View style={[styles.flexContainer, { marginTop: SIZES.padding, paddingHorizontal: SIZES.padding * .5 }]}>
+                            <View style={{
+                                borderColor: COLORS.gray20,
+                                borderWidth: 0.5,
+                                borderRadius: SIZES.radius,
+                                paddingVertical: 1,
+                                marginRight: 3
+                            }}>
+                                <Text style={styles.commonTitle}>30+</Text>
+                                <Text style={styles.paragraph}>Lessons</Text>
+                            </View>
+                            <View style={{
+                                borderColor: COLORS.gray20,
+                                borderWidth: 0.5,
+                                borderRadius: SIZES.radius,
+                                paddingVertical: 1,
+                                marginRight: 3
+                            }}>
+                                <Text style={styles.commonTitle}>4.7</Text>
+                                <Text style={styles.paragraph}>Ratings</Text>
+                            </View>
+                            <View style={{
+                                borderColor: COLORS.gray20,
+                                borderWidth: 0.5,
+                                borderRadius: SIZES.radius,
+                                paddingVertical: 1
+                            }}>
+                                <Text style={styles.commonTitle}>5.7K</Text>
+                                <Text style={styles.paragraph}>Enrolled</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            paddingHorizontal: SIZES.padding
+                        }}>
+                            <Text style={{
+                                marginTop: SIZES.padding,
+                                ...FONTS.h2
+                            }}>Lecturer</Text>
+                        </View>
+                        <View style={{
+                            paddingHorizontal: SIZES.padding,
+                            marginTop: SIZES.padding,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}>
+                            <TouchableOpacity style={{
+                                width: SIZES.padding * 3,
+                                height: SIZES.padding * 3,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                backgroundColor: stringAvatar("Shantha Jayalal").bgcolor,
+                                borderRadius: SIZES.radius * 3,
+                                borderColor: COLORS.gray10,
+                                borderWidth: 2
+                            }}>
+                                <Text style={{
+                                    color: COLORS.additionalColor11,
+                                    ...FONTS.h2
+                                }}>{stringAvatar("Shantha Jayalal").children}</Text>
+                            </TouchableOpacity>
+
+                            <View style={{
+                                flex: 1,
+                                paddingLeft: SIZES.radius * 1.6
+                            }}>
+                                <Text numberOfLines={1} ellipsizeMode="tail" style={{
+                                    ...FONTS.h2
+                                }}>Shantha Jayalal</Text>
+                                <Text style={{
+                                    ...FONTS.body4
+                                }}>Senior Lecturer, UOK</Text>
+                            </View>
+                        </View>
+                    </>
+                )
+            default:
+                break;
+        }
+    }
+
     return (
         <View style={styles.container}>
             {/* Header */}
@@ -86,7 +193,7 @@ const StartCourse = () => {
                 flexDirection: 'row',
                 width: '100%',
                 justifyContent: 'space-around',
-                marginTop: SIZES.padding
+                marginVertical: SIZES.padding
             }}>
                 {TABS.map((item, index) => (
                     <TouchableOpacity
@@ -108,9 +215,10 @@ const StartCourse = () => {
                 ))}
             </View>
 
-            <FlatList
+            <Animated.FlatList
                 nestedScrollEnabled
                 horizontal
+                scrollEnabled={false}
                 ref={flatListRef}
                 pagingEnabled
                 snapToAlignment="center"
@@ -119,6 +227,13 @@ const StartCourse = () => {
                 showsHorizontalScrollIndicator={false}
                 data={TABS}
                 keyExtractor={item => `Start-Course-${item.id}`}
+                onScroll={Animated.event([
+                    {
+                        nativeEvent: { contentOffset: { x: scrollX } }
+                    }
+                ], {
+                    useNativeDriver: false
+                })}
                 renderItem={({ item, index }) => {
                     return (
                         <View style={{
@@ -130,45 +245,7 @@ const StartCourse = () => {
                                 paddingBottom: 150,
                                 // width: SIZES.width,
                             }}>
-                                <Text style={styles.title}>Programming Concepts</Text>
-                                <View style={styles.categoryContainer}>
-                                    <Text style={styles.category}>Information Technology</Text>
-                                </View>
-                                <Text style={styles.commonTitle}>About this course</Text>
-                                <Text style={styles.paragraph}>
-                                    In this beginners guide to coding, you will learn the basics used in computer programming languages. As a beginner, you will start learning the fundamentals of coding that you mind find in a “Programming 101” course. We will use some core Java concepts as a starting point that are applicable to most other programming languages.
-                                </Text>
-                                <View style={[styles.flexContainer, { marginTop: SIZES.padding, paddingHorizontal: SIZES.padding * .5 }]}>
-                                    <View style={{
-                                        borderColor: COLORS.gray20,
-                                        borderWidth: 0.5,
-                                        borderRadius: SIZES.radius,
-                                        paddingVertical: 1,
-                                        marginRight: 3
-                                    }}>
-                                        <Text style={styles.commonTitle}>30+</Text>
-                                        <Text style={styles.paragraph}>Lessons</Text>
-                                    </View>
-                                    <View style={{
-                                        borderColor: COLORS.gray20,
-                                        borderWidth: 0.5,
-                                        borderRadius: SIZES.radius,
-                                        paddingVertical: 1,
-                                        marginRight: 3
-                                    }}>
-                                        <Text style={styles.commonTitle}>4.7</Text>
-                                        <Text style={styles.paragraph}>Ratings</Text>
-                                    </View>
-                                    <View style={{
-                                        borderColor: COLORS.gray20,
-                                        borderWidth: 0.5,
-                                        borderRadius: SIZES.radius,
-                                        paddingVertical: 1
-                                    }}>
-                                        <Text style={styles.commonTitle}>5.7K</Text>
-                                        <Text style={styles.paragraph}>Enrolled</Text>
-                                    </View>
-                                </View>
+                                {renderScrollViewContent()}
                             </ScrollView>
                         </View>
                     )

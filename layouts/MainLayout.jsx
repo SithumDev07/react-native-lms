@@ -1,5 +1,5 @@
 
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { Animated, Image, TouchableOpacity, View } from "react-native";
 import { COLORS, constants, SIZES } from "../constants";
 import { Home, Profile, Search } from '../screens';
@@ -13,6 +13,11 @@ const MainLayout = () => {
 
   const flatListRef = useRef()
   const scrollX = useRef(new Animated.Value(0)).current
+  const onButtonTabPress = useCallback(bottomTabIndex => {
+    flatListRef?.current?.scrollToOffset({
+      offset: bottomTabIndex * SIZES.width
+    })
+  })
 
   function renderContent() {
 
@@ -24,6 +29,7 @@ const MainLayout = () => {
         <Animated.FlatList
           ref={flatListRef}
           horizontal
+          scrollEnabled={false}
           pagingEnabled
           snapToAlignment="center"
           snapToInterval={SIZES.width}
@@ -67,6 +73,7 @@ const MainLayout = () => {
         {BOTTOM_TABS.map((item, index) => (
           <TouchableOpacity
             key={`Bottom-Tab-${index}`}
+            onPress={() => onButtonTabPress(index)}
             ref={item.ref}
             style={{
               flex: 1,
