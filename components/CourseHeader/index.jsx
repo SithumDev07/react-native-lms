@@ -2,8 +2,9 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { COLORS, dummyData, icons, SIZES } from '../../constants'
 import IconButton from '../IconButton'
+import Animated from 'react-native-reanimated'
 
-const CourseHeader = ({ navigation }) => {
+const CourseHeader = ({ navigation, headerStyle, courseImageStyle }) => {
 
     const styles = StyleSheet.create({
         container: {
@@ -34,7 +35,7 @@ const CourseHeader = ({ navigation }) => {
     })
 
     return (
-        <View style={styles.container}>
+        <Animated.View style={[styles.container, headerStyle]}>
             <View style={styles.flexContainer}>
                 <IconButton icon={icons.back} iconStyle={{
                     tintColor: COLORS.black
@@ -48,21 +49,20 @@ const CourseHeader = ({ navigation }) => {
                 position: 'relative',
                 marginTop: SIZES.padding * 2
             }}>
-                <Image
+                <Animated.Image
                     source={dummyData.courses_list_1[0].thumbnail}
                     resizeMode="cover"
-                    style={{
+                    style={[{
                         width: '100%',
                         height: SIZES.height * .25,
                         borderRadius: SIZES.radius * 1.75,
-
-                    }} />
+                    }, courseImageStyle]} />
                 <Text style={styles.label}>Start July 4</Text>
                 <IconButton icon={icons.back} iconStyle={{
                     tintColor: COLORS.black
                 }} containerStyle={styles.bookmarkButton} />
             </View>
-        </View>
+        </Animated.View>
     )
 }
 

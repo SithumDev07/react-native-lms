@@ -1,10 +1,11 @@
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
-import { useFonts } from 'expo-font'
 import { useNavigation } from '@react-navigation/native'
-import { COLORS, FONTS, SIZES } from '../../constants'
+import { useFonts } from 'expo-font'
+import React, { useRef, useState } from 'react'
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { CourseHeader, FeaturedButton, WeekCard } from '../../components'
-import { FlatList, ScrollView } from 'react-native-gesture-handler'
+import { COLORS, FONTS, SIZES } from '../../constants'
 import { stringAvatar } from '../../utils/usableFunctions'
 
 const StartCourse = () => {
@@ -13,6 +14,31 @@ const StartCourse = () => {
     const flatListRef = useRef()
     const [activeTab, setActiveTab] = useState(0)
     const scrollX = useRef(new Animated.Value(0)).current
+
+    const courseHeaderHeight = useSharedValue(SIZES.height * .5)
+    const courseImageScale = useSharedValue(1)
+
+    const courseHeaderAnimationStyle = useAnimatedStyle(() => {
+        return {
+            height: withTiming(courseHeaderHeight.value, {
+                duration: 400,
+                easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+            })
+        }
+    }, [])
+
+    const courseImageStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    scale: withTiming(courseImageScale.value, {
+                        duration: 400,
+                        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+                    })
+                }
+            ]
+        }
+    }, [])
 
     const TABS = [
         {
@@ -86,7 +112,15 @@ const StartCourse = () => {
                             paddingHorizontal: SIZES.padding,
                             marginTop: SIZES.padding
                         }}>
-                            <WeekCard week={"01"} lesson={"Fundamental Techniques of Writing a Better Code"} description={"If you, just as many developers, have the book called Clean Code, by Robert Cecil Martin (Uncle Bob) in your desk, you know the meaning of clean code is very wide and specialists have their own definitions and even disagree about them. Grady Booch, Software Engineering chief-scientist at Software da IBM Research, for example, is cited by the author because he considers that: “Clean code is simple and direct. Clean code reads like well-written prose. Clean code never obscures the designer's intent but rather is full of crisp abstractions and straightforward lines of control. However, Michael Feathers, author of Working Effectively with Legacy Code, highlights the word care in a clean codes definition."} isAssignmentDue />
+                            <WeekCard containerStyle={{
+                                marginBottom: SIZES.padding
+                            }} week={"01"} lesson={"Fundamental Techniques of Writing a Better Code"} description={"If you, just as many developers, have the book called Clean Code, by Robert Cecil Martin (Uncle Bob) in your desk, you know the meaning of clean code is very wide and specialists have their own definitions and even disagree about them. Grady Booch, Software Engineering chief-scientist at Software da IBM Research, for example, is cited by the author because he considers that: “Clean code is simple and direct. Clean code reads like well-written prose. Clean code never obscures the designer's intent but rather is full of crisp abstractions and straightforward lines of control. However, Michael Feathers, author of Working Effectively with Legacy Code, highlights the word care in a clean codes definition."} isAssignmentDue />
+                            <WeekCard containerStyle={{
+                                marginBottom: SIZES.padding
+                            }} week={"01"} lesson={"Fundamental Techniques of Writing a Better Code"} description={"If you, just as many developers, have the book called Clean Code, by Robert Cecil Martin (Uncle Bob) in your desk, you know the meaning of clean code is very wide and specialists have their own definitions and even disagree about them. Grady Booch, Software Engineering chief-scientist at Software da IBM Research, for example, is cited by the author because he considers that: “Clean code is simple and direct. Clean code reads like well-written prose. Clean code never obscures the designer's intent but rather is full of crisp abstractions and straightforward lines of control. However, Michael Feathers, author of Working Effectively with Legacy Code, highlights the word care in a clean codes definition."} isAssignmentDue />
+                            <WeekCard containerStyle={{
+                                marginBottom: SIZES.padding
+                            }} week={"01"} lesson={"Fundamental Techniques of Writing a Better Code"} description={"If you, just as many developers, have the book called Clean Code, by Robert Cecil Martin (Uncle Bob) in your desk, you know the meaning of clean code is very wide and specialists have their own definitions and even disagree about them. Grady Booch, Software Engineering chief-scientist at Software da IBM Research, for example, is cited by the author because he considers that: “Clean code is simple and direct. Clean code reads like well-written prose. Clean code never obscures the designer's intent but rather is full of crisp abstractions and straightforward lines of control. However, Michael Feathers, author of Working Effectively with Legacy Code, highlights the word care in a clean codes definition."} isAssignmentDue />
                         </View>
                     </>
                 )
@@ -186,7 +220,7 @@ const StartCourse = () => {
     return (
         <View style={styles.container}>
             {/* Header */}
-            <CourseHeader navigation={navigation} />
+            <CourseHeader courseImageStyle={courseImageStyle} navigation={navigation} headerStyle={courseHeaderAnimationStyle} />
 
             <View style={{
                 paddingHorizontal: SIZES.padding,
@@ -241,12 +275,24 @@ const StartCourse = () => {
                             height: '100%',
                             flexGrow: 1
                         }}>
-                            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{
-                                paddingBottom: 150,
-                                // width: SIZES.width,
-                            }}>
+                            <Animated.ScrollView
+                                scrollEventThrottle={20}
+                                onScroll={(event) => {
+                                    const scrolling = event.nativeEvent.contentOffset.y;
+
+                                    if (scrolling > 20) {
+                                        courseHeaderHeight.value = 100
+                                        courseImageScale.value = 0
+                                    } else {
+                                        courseHeaderHeight.value = SIZES.height * .5
+                                        courseImageScale.value = 1
+                                    }
+                                }} showsVerticalScrollIndicator={false} contentContainerStyle={{
+                                    paddingBottom: 500,
+                                    // width: SIZES.width,
+                                }}>
                                 {renderScrollViewContent()}
-                            </ScrollView>
+                            </Animated.ScrollView>
                         </View>
                     )
                 }}

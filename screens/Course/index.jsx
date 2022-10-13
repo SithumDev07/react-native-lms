@@ -1,24 +1,38 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { CourseHeader, FeaturedButton } from '../../components'
-import { useFonts } from 'expo-font'
-import { COLORS, FONTS, SIZES } from '../../constants'
 import { useNavigation } from '@react-navigation/native'
+import React from 'react'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { CourseHeader, FeaturedButton } from '../../components'
+import { COLORS, FONTS, SIZES } from '../../constants'
 
 const Course = () => {
 
     const navigation = useNavigation()
 
-    const [loaded] = useFonts({
-        Manrope: require('../../assets/fonts/Manrope-Regular.ttf'),
-        'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
-        'Poppins-SemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
-        'Poppins-Italic': require('../../assets/fonts/Poppins-Italic.ttf')
-    })
+    const courseHeaderHeight = useSharedValue(SIZES.height * .5)
+    const courseImageScale = useSharedValue(1)
 
-    if (!loaded) {
-        return null;
-    }
+    const courseHeaderAnimationStyle = useAnimatedStyle(() => {
+        return {
+            height: withTiming(courseHeaderHeight.value, {
+                duration: 400,
+                easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+            })
+        }
+    }, [])
+
+    const courseImageStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    scale: withTiming(courseImageScale.value, {
+                        duration: 400,
+                        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+                    })
+                }
+            ]
+        }
+    }, [])
 
     const styles = StyleSheet.create({
         container: {
@@ -69,12 +83,26 @@ const Course = () => {
                 height: '100%',
             }}>
                 {/* Header */}
-                <CourseHeader navigation={navigation} />
+                <CourseHeader courseImageStyle={courseImageStyle} navigation={navigation} headerStyle={courseHeaderAnimationStyle} />
 
                 {/* Body */}
-                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{
-                    paddingBottom: 150,
-                }}>
+                <Animated.ScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                        paddingBottom: 300,
+                    }}
+                    scrollEventThrottle={20}
+                    onScroll={(event) => {
+                        const scrolling = event.nativeEvent.contentOffset.y;
+
+                        if (scrolling > 20) {
+                            courseHeaderHeight.value = 100
+                            courseImageScale.value = 0
+                        } else {
+                            courseHeaderHeight.value = SIZES.height * .5
+                            courseImageScale.value = 1
+                        }
+                    }}>
                     <Text style={styles.title}>Programming Concepts</Text>
                     <View style={styles.categoryContainer}>
                         <Text style={styles.category}>Information Technology</Text>
@@ -114,7 +142,7 @@ const Course = () => {
                             <Text style={styles.paragraph}>Enrolled</Text>
                         </View>
                     </View>
-                </ScrollView>
+                </Animated.ScrollView>
             </View>
             <FeaturedButton title="Enroll" />
         </View>

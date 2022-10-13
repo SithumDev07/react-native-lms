@@ -3,7 +3,7 @@ import React from 'react'
 import { COLORS, FONTS, icons, SIZES } from '../../constants'
 import IconButton from '../IconButton'
 
-const WeekCard = ({ week, lesson, description, isAssignmentDue = false }) => {
+const WeekCard = ({ week, lesson, description, isAssignmentDue = false, containerStyle }) => {
 
     const styles = StyleSheet.create({
         container: {
@@ -12,6 +12,7 @@ const WeekCard = ({ week, lesson, description, isAssignmentDue = false }) => {
             borderColor: COLORS.gray70,
             paddingVertical: SIZES.radius,
             paddingHorizontal: SIZES.radius,
+            ...containerStyle
         },
         week: {
             ...FONTS.body4,
