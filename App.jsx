@@ -29,7 +29,7 @@ const App = () => {
         }}
         initialRouteName={"Dashboard"}
       >
-        {/* <Stack.Screen name="Login" component={Login} /> */}
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Course" component={Course} />
         <Stack.Screen name="Dashboard" component={MainLayout} />
         <Stack.Screen name="StartCourse" component={StartCourse} />
